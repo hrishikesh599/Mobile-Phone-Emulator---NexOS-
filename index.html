@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>NexOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page-caption">NEXOS — INSPIRED BY NOTHING · LONG-PRESS THE HOME SCREEN TO EDIT WIDGETS</div>
+
+<div class="phone" id="phone" data-device-theme="black">
+  <div class="glyph-strip" id="glyphStrip">
+    <div class="glyph-dot"></div><div class="glyph-dot"></div><div class="glyph-dot"></div><div class="glyph-dot"></div><div class="glyph-dot"></div>
+  </div>
+
+  <div class="screen-frame" id="screenFrame" data-wallpaper="dots">
+    <div class="notch"></div>
+
+    <div class="statusbar">
+      <span id="sbTime">9:41</span>
+      <div class="sb-icons">
+        <span class="torch-indicator" id="torchIndicator">⚑</span>
+        <span id="sbBattPct">82%</span>
+        <div class="batt-shell"><div class="batt-fill" id="battFill"></div></div>
+      </div>
+    </div>
+
+    <div class="notif-banner" id="notifBanner">
+      <div class="notif-dot"></div>
+      <div class="notif-text"><b id="notifTitle">NexOS</b><span id="notifBody">Notification</span></div>
+    </div>
+
+    <!-- LOCK SCREEN -->
+    <section class="scr lockscreen active" id="scr-lock">
+      <div>
+        <div class="lock-dot-clock" id="lockDotClock"></div>
+        <div class="lock-date" id="lockDate">Saturday, 19 September</div>
+        <div class="lock-glyph-ring"><i></i></div>
+        <div class="lock-sub">NEXOS</div>
+      </div>
+      <div class="swipe-hint">TAP TO UNLOCK</div>
+    </section>
+
+    <!-- HOME SCREEN -->
+    <section class="scr homescreen" id="scr-home">
+      <div class="cc-handle" id="ccHandle" title="Control centre"></div>
+      <div class="widget-scroll">
+        <div class="home-greeting"><span id="homeGreeting">GOOD EVENING</span><span class="edit-btn" id="editToggle">EDIT</span></div>
+        <div class="edit-hint" id="editHint">DRAG TO MOVE · PULL CORNER TO RESIZE</div>
+        <div class="widget-canvas" id="widgetCanvas"></div>
+        <button class="add-tile" id="addTileBtn">+ ADD WIDGET</button>
+      </div>
+      <div class="dock" id="dock"></div>
+    </section>
+
+    <!-- APP DRAWER -->
+    <section class="scr appdrawer" id="scr-drawer">
+      <div class="drawer-search"><input type="text" id="drawerSearch" placeholder="Search apps"></div>
+      <div class="apps-grid" id="appsGrid"></div>
+    </section>
+
+    <!-- RECENTS -->
+    <section class="scr recents" id="scr-recents">
+      <div class="recents-title">RECENTS</div>
+      <div class="recents-list" id="recentsList"></div>
+    </section>
+
+    <!-- CONTROL CENTER -->
+    <div class="control-center" id="controlCenter">
+      <button class="cc-close" id="ccClose"></button>
+      <div class="cc-toggles" id="ccToggles"></div>
+      <div class="cc-slider-row"><span class="ic">☼</span><input type="range" id="brightnessSlider" min="40" max="130" value="100"></div>
+      <div class="cc-slider-row"><span class="ic">♪</span><input type="range" id="volumeSlider" min="0" max="100" value="60"></div>
+      <div class="cc-bottom-row">
+        <button id="ccSettingsBtn">SETTINGS</button>
+        <button id="ccGlyphBtn">TEST GLYPH</button>
+      </div>
+    </div>
+
+    <!-- WIDGET PICKER SHEET -->
+    <div class="sheet-backdrop" id="sheetBackdrop"></div>
+    <div class="sheet" id="widgetSheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-title">ADD A WIDGET</div>
+      <div class="sheet-list" id="sheetList"></div>
+    </div>
+
+    <!-- APP: SETTINGS -->
+    <div class="app-overlay" id="app-settings">
+      <div class="app-topbar"><button class="app-back" data-close>‹</button><div class="app-title">SETTINGS</div></div>
+      <div class="app-body">
+        <div class="set-section">
+          <h4>Device finish</h4>
+          <div class="theme-row" id="themeRow"></div>
+        </div>
+        <div class="set-section">
+          <h4>Wallpaper</h4>
+          <div class="wallpaper-row" id="wallpaperRow"></div>
+        </div>
+        <div class="set-section">
+          <h4>Preferences</h4>
+          <div class="set-row"><div><div class="sr-label">Sound effects</div><div class="sr-sub">Soft tones on key actions</div></div><div class="toggle-pill" id="toggleSound"><i></i></div></div>
+          <div class="set-row"><div><div class="sr-label">Page backdrop</div><div class="sr-sub">Colour of the space around the device</div></div><div class="toggle-pill" id="toggleTheme"><i></i></div></div>
+        </div>
+        <div class="set-section">
+          <h4>About this phone</h4>
+          <div class="about-box">
+            MODEL — NexOS Web Edition<br>
+            VERSION — 2.0 (Build DOT-15H)<br>
+            STORAGE — 128 / 256 GB<br>
+            GLYPH — 5-zone interface
+          </div>
+        </div>
+        <div class="set-section">
+          <button class="danger-btn" id="resetPhoneBtn">RESET PHONE</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- APP: NOTES -->
+    <div class="app-overlay" id="app-notes">
+      <div class="app-topbar"><button class="app-back" data-close>‹</button><div class="app-title">NOTES</div></div>
+      <div class="app-body notes-app"><textarea id="notesTextarea" placeholder="Start typing..."></textarea></div>
+    </div>
+
+    <!-- APP: CALCULATOR -->
+    <div class="app-overlay" id="app-calculator">
+      <div class="app-topbar"><button class="app-back" data-close>‹</button><div class="app-title">CALCULATOR</div></div>
+      <div class="app-body">
+        <div class="calc-display" id="calcDisplay">0</div>
+        <div class="calc-grid" id="calcGrid"></div>
+      </div>
+    </div>
+
+    <!-- APP: CLOCK -->
+    <div class="app-overlay" id="app-clock">
+      <div class="app-topbar"><button class="app-back" data-close>‹</button><div class="app-title">CLOCK</div></div>
+      <div class="app-body">
+        <div class="clock-big" id="clockBig">9:41:00</div>
+        <div class="clock-date-big" id="clockDateBig">SATURDAY, 19 SEPTEMBER</div>
+        <div id="alarmsList"></div>
+        <div class="alarm-add-row">
+          <input type="time" id="alarmTimeInput">
+          <input type="text" id="alarmLabelInput" placeholder="Label" style="flex:1;">
+          <button id="alarmAddBtn">ADD</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- APP: WEATHER -->
+    <div class="app-overlay" id="app-weather">
+      <div class="app-topbar"><button class="app-back" data-close>‹</button><div class="app-title">WEATHER</div></div>
+      <div class="app-body">
+        <div class="wthr-hero" id="wthrHero"><div class="big-temp" id="wthrBigTemp">21°</div><div class="cond" id="wthrBigCond">Partly cloudy</div></div>
+        <div class="wthr-hint">TAP THE TEMPERATURE TO CYCLE DEMO CONDITIONS</div>
+        <div class="wthr-days" id="wthrDays"></div>
+      </div>
+    </div>
+
+    <!-- APP: GALLERY -->
+    <div class="app-overlay" id="app-gallery">
+      <div class="app-topbar"><button class="app-back" data-close>‹</button><div class="app-title">GALLERY</div></div>
+      <div class="app-body"><div class="gallery-grid" id="galleryGrid"></div></div>
+    </div>
+
+    <!-- APP: CAMERA -->
+    <div class="app-overlay" id="app-camera">
+      <div class="app-topbar"><button class="app-back" data-close>‹</button><div class="app-title">CAMERA</div></div>
+      <div class="camera-view" id="cameraView">
+        <video id="cameraVideo" autoplay playsinline muted></video>
+        <div class="camera-fallback" id="cameraFallback">
+          <span id="cameraFallbackMsg">Camera unavailable</span>
+          <button id="cameraSimulateBtn">SIMULATE CAPTURE</button>
+        </div>
+        <div class="camera-countdown" id="cameraCountdown"></div>
+        <div class="camera-flash" id="cameraFlash"></div>
+      </div>
+      <div class="shutter-row">
+        <label class="mini-toggle"><input type="checkbox" id="glyphCountdownToggle">GLYPH COUNTDOWN TIMER</label>
+        <button class="shutter-btn" id="shutterBtn"></button>
+      </div>
+    </div>
+
+    <!-- APP: PHONE (real dialer + call log) -->
+    <div class="app-overlay" id="app-phone">
+      <div class="app-topbar"><button class="app-back" data-close>‹</button><div class="app-title">PHONE</div></div>
+      <div class="app-body">
+        <div class="phone-tabs">
+          <button class="phone-tab active" data-phone-tab="keypad">KEYPAD</button>
+          <button class="phone-tab" data-phone-tab="recents">RECENTS</button>
+        </div>
+        <div id="phoneKeypadView">
+          <div class="phone-display" id="phoneDisplay">Enter a number</div>
+          <div class="phone-keypad" id="phoneKeypadGrid"></div>
+          <div class="phone-actions">
+            <button class="phone-del-btn" id="phoneDelBtn">⌫</button>
+            <button class="phone-call-btn" id="phoneCallBtn">☏</button>
+          </div>
+        </div>
+        <div id="phoneRecentsView" style="display:none;">
+          <div id="callLogList"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- APP: MESSAGES (real threads, persisted, auto-reply) -->
+    <div class="app-overlay" id="app-messages">
+      <div class="app-topbar"><button class="app-back" data-close>‹</button><div class="app-title">MESSAGES</div></div>
+      <div class="app-body">
+        <div class="messages-list" id="messagesList"></div>
+        <div class="message-thread" id="messageThread">
+          <div class="thread-header">
+            <button class="sub-back" id="threadBackBtn">‹</button>
+            <div class="thread-name" id="threadContactName">Contact</div>
+          </div>
+          <div class="thread-messages" id="threadMessages"></div>
+          <div class="thread-input-row">
+            <input type="text" id="messageInput" placeholder="Message">
+            <button id="messageSendBtn">➤</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- APP: FILES (real storage / data manager) -->
+    <div class="app-overlay" id="app-files">
+      <div class="app-topbar"><button class="app-back" data-close>‹</button><div class="app-title">FILES</div></div>
+      <div class="app-body">
+        <div id="filesList"></div>
+        <div class="files-total" id="filesTotalUsage">Total local storage used: ~0 KB</div>
+      </div>
+    </div>
+
+    <!-- APP: RECORDER (real mic recording via MediaRecorder) -->
+    <div class="app-overlay" id="app-recorder">
+      <div class="app-topbar"><button class="app-back" data-close>‹</button><div class="app-title">RECORDER</div></div>
+      <div class="app-body">
+        <div class="recorder-hero">
+          <button class="record-btn" id="recordBtn"></button>
+          <div class="record-timer" id="recordTimer">00:00</div>
+          <div class="record-status" id="recordStatus">Tap to record</div>
+        </div>
+        <div id="recordingsList"></div>
+      </div>
+    </div>
+
+    <!-- APP: BROWSER (real offline navigation, history, address bar) -->
+    <div class="app-overlay" id="app-browser">
+      <div class="app-topbar"><button class="app-back" data-close>‹</button><div class="app-title">BROWSER</div></div>
+      <div class="app-body">
+        <div class="browser-toolbar">
+          <button id="browserBack" aria-label="Back">‹</button>
+          <button id="browserForward" aria-label="Forward">›</button>
+          <input type="text" id="browserAddress" placeholder="Search or type a page name">
+          <button id="browserReload" aria-label="Reload">↻</button>
+        </div>
+        <div class="browser-content" id="browserContent"></div>
+        <div class="browser-note">NexOS Browser — offline demo pages only, no live internet in this sandboxed environment</div>
+      </div>
+    </div>
+
+    <!-- APP: STORE (real shortcuts) -->
+    <div class="app-overlay" id="app-store">
+      <div class="app-topbar"><button class="app-back" data-close>‹</button><div class="app-title">STORE</div></div>
+      <div class="app-body">
+        <div class="store-card">
+          <h4>Widgets</h4>
+          <p>Add another widget to your home screen — clock, weather, notes, to-do, music and more, all resizable.</p>
+          <button id="storeAddWidgetBtn">ADD A WIDGET</button>
+        </div>
+        <div class="store-card">
+          <h4>Wallpapers &amp; finish</h4>
+          <p>Pick a new wallpaper or switch between Matte Black and Ceramic White in Settings.</p>
+          <button id="storeWallpaperBtn">OPEN SETTINGS</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-preview" id="galleryPreview"><button id="galleryPreviewClose">×</button><div id="galleryPreviewContent"></div></div>
+    <div class="toast" id="toast"></div>
+
+    <div class="navbar">
+      <div class="nav-side left"><button id="navBack" aria-label="Back">‹</button></div>
+      <button class="home-pill" id="navHome" aria-label="Home"></button>
+      <div class="nav-side right"><button id="navRecents" aria-label="Recents">▢</button></div>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
